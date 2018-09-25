@@ -10,7 +10,7 @@ import {
   FEMALE,
   ANDROGYNOUS,
   getGenderConst,
-  getGenderStr,
+  convertGenderStr,
   getGenderByRule,
   getGenderByRuleSet,
 } from '../gender';
@@ -23,7 +23,7 @@ function expectList(fn, str) {
     .filter(s => !!s);
   lines.forEach(line => {
     const [arg, res] = line.split(/\s+/g);
-    expect(`${arg} ${JSON.stringify(fn(arg))}`).toEqual(`${arg} ${res}`);
+    expect(`${arg} ${fn(arg) || 'null'}`).toEqual(`${arg} ${res}`);
   });
 }
 
@@ -31,22 +31,22 @@ describe('lvovich/gender', () => {
   describe('internal methods', () => {
     describe('mergeGenders()', () => {
       it('return ANDROGYNOUS', () => {
-        expect(mergeGenders(ANDROGYNOUS, null)).toEqual(ANDROGYNOUS);
-        expect(mergeGenders(null, ANDROGYNOUS)).toEqual(ANDROGYNOUS);
+        expect(mergeGenders(ANDROGYNOUS, null)).toEqual(null);
+        expect(mergeGenders(null, ANDROGYNOUS)).toEqual(null);
         expect(mergeGenders(ANDROGYNOUS, ANDROGYNOUS)).toEqual(ANDROGYNOUS);
       });
 
       it('return MALE', () => {
-        expect(mergeGenders(MALE, null)).toEqual(MALE);
+        expect(mergeGenders(MALE, null)).toEqual(null);
         expect(mergeGenders(MALE, ANDROGYNOUS)).toEqual(MALE);
-        expect(mergeGenders(null, MALE)).toEqual(MALE);
+        expect(mergeGenders(null, MALE)).toEqual(null);
         expect(mergeGenders(ANDROGYNOUS, MALE)).toEqual(MALE);
       });
 
       it('return FEMALE', () => {
-        expect(mergeGenders(FEMALE, null)).toEqual(FEMALE);
+        expect(mergeGenders(FEMALE, null)).toEqual(null);
         expect(mergeGenders(FEMALE, ANDROGYNOUS)).toEqual(FEMALE);
-        expect(mergeGenders(null, FEMALE)).toEqual(FEMALE);
+        expect(mergeGenders(null, FEMALE)).toEqual(null);
         expect(mergeGenders(ANDROGYNOUS, FEMALE)).toEqual(FEMALE);
       });
 
@@ -69,24 +69,24 @@ describe('lvovich/gender', () => {
 
       it('return null', () => {
         expect(getGenderConst(null)).toEqual(null);
-        expect(getGenderConst('strange')).toEqual(null);
+        expect(getGenderConst(('strange': any))).toEqual(null);
       });
     });
 
-    describe('getGenderStr()', () => {
+    describe('convertGenderStr()', () => {
       it('return GENDER', () => {
-        expect(getGenderStr(MALE)).toEqual('male');
-        expect(getGenderStr(FEMALE)).toEqual('female');
-        expect(getGenderStr(ANDROGYNOUS)).toEqual('androgynous');
-        expect(getGenderStr('male')).toEqual('male');
-        expect(getGenderStr('female')).toEqual('female');
-        expect(getGenderStr('androgynous')).toEqual('androgynous');
+        expect(convertGenderStr(MALE)).toEqual('male');
+        expect(convertGenderStr(FEMALE)).toEqual('female');
+        expect(convertGenderStr(ANDROGYNOUS)).toEqual('androgynous');
+        expect(convertGenderStr('male')).toEqual('male');
+        expect(convertGenderStr('female')).toEqual('female');
+        expect(convertGenderStr('androgynous')).toEqual('androgynous');
       });
 
       it('return null', () => {
-        expect(getGenderStr(null)).toEqual(null);
+        expect(convertGenderStr(null)).toEqual(null);
         // $FlowFixMe
-        expect(getGenderStr('strange')).toEqual(null);
+        expect(convertGenderStr('strange')).toEqual(null);
       });
     });
 
@@ -156,18 +156,18 @@ describe('lvovich/gender', () => {
         getFirstnameGender,
         `
         // MALES
-        Павел 1
-        Петр 1
+        Павел male
+        Петр male
 
         // FEMALES
-        Анна 2
-        Катя 2
+        Анна female
+        Катя female
 
         // ANDROGYNOUS
-        Саша 4
-        Женя 4
-        Бахыт 4
-        Муса 4
+        Саша androgynous
+        Женя androgynous
+        Бахыт androgynous
+        Муса androgynous
 
         // UNDETERMINED BY RULES
         тттт null
@@ -184,12 +184,12 @@ describe('lvovich/gender', () => {
         getMiddlenameGender,
         `
         // MALES
-        Павлович 1
-        Бауржанулы 1
+        Павлович male
+        Бауржанулы male
 
         // FEMALES
-        Ивановна 2
-        Маманкызы 2
+        Ивановна female
+        Маманкызы female
 
         // UNDETERMINED BY RULES
         иваново null
@@ -207,19 +207,19 @@ describe('lvovich/gender', () => {
         getLastnameGender,
         `
         // MALES
-        Иванов 1
-        Градский 1
-        Ананьев 1
+        Иванов male
+        Градский male
+        Ананьев male
 
         // FEMALES
-        Иванова 2
-        Кабазёва 2
-        Кабазева 2
-        Таптыгина 2
+        Иванова female
+        Кабазёва female
+        Кабазева female
+        Таптыгина female
 
         // ANDROGYNOUS
-        Грин 4
-        Борейко 4
+        Грин androgynous
+        Борейко androgynous
 
         // UNDETERMINED BY RULES
         ким null
@@ -237,7 +237,7 @@ describe('lvovich/gender', () => {
         getGender({
           first: 'Саша',
         })
-      ).toEqual(4); // ANDROGYNOUS
+      ).toEqual('androgynous');
     });
 
     it('should determine gender by lastname', () => {
@@ -246,7 +246,7 @@ describe('lvovich/gender', () => {
           last: 'Иванов',
           first: 'Саша',
         })
-      ).toEqual(1);
+      ).toEqual('male');
     });
 
     it('should determine gender by middlename', () => {
@@ -255,7 +255,16 @@ describe('lvovich/gender', () => {
           first: 'Саша',
           middle: 'Петрович',
         })
-      ).toEqual(1);
+      ).toEqual('male');
+    });
+
+    it('should return null for wrong male/female data', () => {
+      expect(
+        getGender({
+          last: 'Абуова',
+          first: 'Андрей',
+        })
+      ).toEqual(null);
     });
   });
 });

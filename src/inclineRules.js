@@ -2,16 +2,16 @@
 /* eslint-disable no-use-before-define, no-continue, arrow-parens */
 
 import { getGenderConst, ANDROGYNOUS } from './gender';
-import type { LvovichGenderStrT, LvovichGenderT } from './gender';
+import type { GenderStrT, GenderConstT } from './gender';
 
 export const NOMINATIVE: 1 = 1; // именительный
 export const GENITIVE: 2 = 2; // родительный
 export const DATIVE: 3 = 3; // дательный
 export const ACCUSATIVE: 4 = 4; // винительный
-export const INSTRUMENTAL: 5 = 5; // предложный
+export const INSTRUMENTAL: 5 = 5; // творительный
 export const PREPOSITIONAL: 6 = 6; // предложный
 
-export type LvovichDeclentionT =
+export type DeclentionT =
   | typeof NOMINATIVE
   | typeof GENITIVE
   | typeof DATIVE
@@ -19,30 +19,30 @@ export type LvovichDeclentionT =
   | typeof INSTRUMENTAL
   | typeof PREPOSITIONAL;
 
-export type LvovichDeclentionStrT =
+export type DeclentionStrT =
   | 'nominative'
   | 'genitive'
   | 'dative'
   | 'accusative'
   | 'instrumental'
   | 'prepositional'
-  | LvovichDeclentionT;
+  | DeclentionT;
 
-export type LvovichDeclentionModsT = [string, string, string, string, string] | [];
+export type DeclentionModsT = [string, string, string, string, string] | [];
 
-export type LvovichDeclensionRuleT = {
-  gender: LvovichGenderStrT,
+export type DeclensionRuleT = {|
+  gender: ?GenderStrT | GenderConstT,
   test: string[],
-  mods: LvovichDeclentionModsT,
+  mods: DeclentionModsT,
   tags?: string[],
-};
+|};
 
-export type LvovichDeclensionRuleSetT = {
-  exceptions?: LvovichDeclensionRuleT[],
-  suffixes?: LvovichDeclensionRuleT[],
-};
+export type DeclensionRuleSetT = {|
+  exceptions?: DeclensionRuleT[],
+  suffixes?: DeclensionRuleT[],
+|};
 
-export function constantizeGenderInRules(rules: LvovichDeclensionRuleSetT) {
+export function constantizeGenderInRules(rules: DeclensionRuleSetT) {
   if (Array.isArray(rules.exceptions)) {
     rules.exceptions.forEach(rule => {
       rule.gender = getGenderConst(rule.gender); // eslint-disable-line
@@ -57,10 +57,10 @@ export function constantizeGenderInRules(rules: LvovichDeclensionRuleSetT) {
 
 export function inclineByRules(
   str: string,
-  declensionStr: LvovichDeclentionT | LvovichDeclentionStrT,
-  genderStr: LvovichGenderT | LvovichGenderStrT,
-  ruleSet: LvovichDeclensionRuleSetT
-) {
+  declensionStr: DeclentionT | DeclentionStrT,
+  genderStr: ?GenderConstT | GenderStrT,
+  ruleSet: DeclensionRuleSetT
+): string {
   const declension = getDeclensionConst(declensionStr);
   const gender = getGenderConst(genderStr);
 
@@ -86,10 +86,10 @@ export function inclineByRules(
 
 export function findRule(
   str: string,
-  gender: LvovichGenderT,
-  ruleSet: LvovichDeclensionRuleSetT,
+  gender: ?GenderConstT,
+  ruleSet: DeclensionRuleSetT,
   tags?: { firstWord?: boolean } = {}
-): ?LvovichDeclensionRuleT {
+): ?DeclensionRuleT {
   if (!str) {
     return null;
   }
@@ -113,11 +113,11 @@ export function findRule(
 }
 
 export function findExactRule(
-  rules: LvovichDeclensionRuleT[],
-  gender: LvovichGenderT,
+  rules: DeclensionRuleT[],
+  gender: ?GenderConstT,
   matchFn: (some: string) => boolean,
   tags: string[] = []
-): ?LvovichDeclensionRuleT {
+): ?DeclensionRuleT {
   for (let i = 0; i < rules.length; i++) {
     const rule = rules[i];
 
@@ -144,7 +144,7 @@ export function findExactRule(
   return null;
 }
 
-function getModByIdx(mods: LvovichDeclentionModsT, i: number): string {
+function getModByIdx(mods: DeclentionModsT, i: number): string {
   if (mods && mods.length >= i) {
     return mods[i];
   }
@@ -152,9 +152,9 @@ function getModByIdx(mods: LvovichDeclentionModsT, i: number): string {
 }
 
 export function applyRule(
-  rule: LvovichDeclensionRuleT | { mods: LvovichDeclentionModsT },
+  rule: DeclensionRuleT | { mods: DeclentionModsT },
   str: string,
-  declension?: ?LvovichDeclentionT
+  declension?: ?DeclentionT
 ) {
   let mod;
   switch (declension) {
@@ -199,7 +199,7 @@ export function applyMod(str: string, mod: string): string {
   return str;
 }
 
-export function getDeclensionConst(key: ?LvovichDeclentionStrT): ?LvovichDeclentionT {
+export function getDeclensionConst(key: ?DeclentionStrT): ?DeclentionT {
   switch (key) {
     case 'nominative':
     case NOMINATIVE:
@@ -224,7 +224,7 @@ export function getDeclensionConst(key: ?LvovichDeclentionStrT): ?LvovichDeclent
   }
 }
 
-export function getDeclensionStr(cnst: LvovichDeclentionT | string | null): ?LvovichDeclentionStrT {
+export function getDeclensionStr(cnst: ?DeclentionT | string): ?DeclentionStrT {
   switch (cnst) {
     case 'nominative':
     case NOMINATIVE:

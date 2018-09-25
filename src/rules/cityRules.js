@@ -1,3 +1,7 @@
+/* @flow */
+
+import type { DeclensionRuleSetT } from '../inclineRules';
+
 export const frozenWords = ['форт-шевченко'];
 
 export const frozenParts = [
@@ -35,7 +39,7 @@ export const frozenParts = [
 // do not decline words after this words
 export const frozenPartsAfter = ['село', 'поселок', 'аул', 'город', 'деревня'];
 
-export const customInflections = {
+export const customInflections: DeclensionRuleSetT = {
   exceptions: [
     {
       gender: 'androgynous',

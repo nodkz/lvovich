@@ -2,33 +2,31 @@
 
 import { lvovich, inclineFirstname, inclineLastname, inclineMiddlename } from '../incline';
 
-import { MALE, ANDROGYNOUS } from '../gender';
-
 describe('lvovich/incline', () => {
   describe('lvovich()', () => {
     it('should autodetect gender and incline person', () => {
       expect(lvovich({ first: 'Павел' }, 'dative')).toEqual({
         first: 'Павлу',
-        gender: MALE,
+        gender: 'male',
       });
     });
 
     it('should autodetect gender and incline person', () => {
       expect(lvovich({ first: 'Паша' }, 'instrumental')).toEqual({
         first: 'Пашей',
-        gender: MALE,
+        gender: 'male',
       });
     });
 
     it('should incline person with androgynous name', () => {
       expect(lvovich({ first: 'Саша' }, 'dative')).toEqual({
         first: 'Саше',
-        gender: ANDROGYNOUS,
+        gender: 'androgynous',
       });
       expect(lvovich({ first: 'Саша', last: 'Иванов' }, 'dative')).toEqual({
         first: 'Саше',
         last: 'Иванову',
-        gender: MALE,
+        gender: 'male',
       });
     });
   });

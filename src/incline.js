@@ -1,14 +1,14 @@
 /* @flow */
 /* eslint-disable no-use-before-define, no-continue, arrow-parens */
 
-import { getGender, getFirstnameGender, getLastnameGender, getMiddlenameGender } from './gender';
+import { getGender, getFG, getLG, getMG } from './gender';
 import { constantizeGenderInRules, inclineByRules } from './inclineRules';
 import rulesLastname from './rules/inclineRulesLastname';
 import rulesMiddlename from './rules/inclineRulesMiddlename';
 import rulesFirstname from './rules/inclineRulesFirstname';
 
-import type { LvovichGenderStrT } from './gender';
-import type { LvovichDeclentionStrT } from './inclineRules';
+import type { GenderStrT } from './gender';
+import type { DeclentionStrT } from './inclineRules';
 
 constantizeGenderInRules(rulesLastname);
 constantizeGenderInRules(rulesMiddlename);
@@ -18,36 +18,36 @@ export type LvovichPersonT = {
   first?: ?string,
   last?: ?string,
   middle?: ?string,
-  gender?: LvovichGenderStrT,
+  gender?: ?GenderStrT,
 };
 
 export function inclineFirstname(
   str: string,
-  declension?: LvovichDeclentionStrT = 'accusative',
-  gender?: LvovichGenderStrT
-) {
-  return inclineByRules(str, declension, gender || getFirstnameGender(str), rulesFirstname);
+  declension?: DeclentionStrT = 'accusative',
+  gender?: ?GenderStrT
+): string {
+  return inclineByRules(str, declension, gender || getFG(str), rulesFirstname);
 }
 
 export function inclineLastname(
   str: string,
-  declension: LvovichDeclentionStrT = 'accusative',
-  gender?: LvovichGenderStrT
-) {
-  return inclineByRules(str, declension, gender || getLastnameGender(str), rulesLastname);
+  declension: DeclentionStrT = 'accusative',
+  gender?: ?GenderStrT
+): string {
+  return inclineByRules(str, declension, gender || getLG(str), rulesLastname);
 }
 
 export function inclineMiddlename(
   str: string,
-  declension: LvovichDeclentionStrT = 'accusative',
-  gender?: LvovichGenderStrT
-) {
-  return inclineByRules(str, declension, gender || getMiddlenameGender(str), rulesMiddlename);
+  declension: DeclentionStrT = 'accusative',
+  gender?: ?GenderStrT
+): string {
+  return inclineByRules(str, declension, gender || getMG(str), rulesMiddlename);
 }
 
 export function lvovich(
-  person: LvovichPersonT,
-  declension?: LvovichDeclentionStrT
+  person: $Shape<LvovichPersonT>,
+  declension?: DeclentionStrT
 ): LvovichPersonT {
   const res = {};
 

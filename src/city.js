@@ -12,12 +12,12 @@ import {
 } from './inclineRules';
 import { inclineFirstname } from './incline';
 import { frozenWords, frozenParts, frozenPartsAfter, customInflections } from './rules/cityRules';
-import type { LvovichGenderStrT } from './gender';
+import type { GenderStrT } from './gender';
 
 constantizeGenderInRules(customInflections);
 
 // предложный, в каком городе живете/находитесь?
-export function cityIn(name: string, gender?: LvovichGenderStrT) {
+export function cityIn(name: string, gender?: GenderStrT) {
   if (isFrozen(name, frozenWords)) return name;
   return name
     .split(/(\s|-)/g)
@@ -35,7 +35,7 @@ export function cityIn(name: string, gender?: LvovichGenderStrT) {
 }
 
 // родительный, из какого города приехали?
-export function cityFrom(name: string, gender?: LvovichGenderStrT) {
+export function cityFrom(name: string, gender?: GenderStrT) {
   if (isFrozen(name, frozenWords)) return name;
   return name
     .split(/(\s|-)/g)

@@ -1,11 +1,15 @@
-const middlename = {
+/* @flow */
+
+import type { GenderRuleSetT } from '../gender';
+
+const middlename: GenderRuleSetT = {
   suffixes: {
     female: ['на', 'кызы', 'гызы'],
     male: ['ич', 'оглы', 'улы', 'уулу'],
   },
 };
 
-const lastname = {
+const lastname: GenderRuleSetT = {
   exceptions: {
     androgynous: ['бова', 'регин', 'дарвин', 'пэйлин', 'грин', 'цин', 'шенгелая'],
   },
@@ -32,7 +36,7 @@ const lastname = {
   },
 };
 
-const firstname = {
+const firstname: GenderRuleSetT = {
   exceptions: {
     androgynous: [
       'анри',

@@ -1,4 +1,8 @@
-const middlename = {
+/* @flow */
+
+import type { DeclensionRuleSetT } from '../inclineRules';
+
+const middlename: DeclensionRuleSetT = {
   exceptions: [
     {
       gender: 'androgynous',

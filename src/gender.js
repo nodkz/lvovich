@@ -7,9 +7,9 @@ export const MALE: 1 = 1;
 export const FEMALE: 2 = 2;
 export const ANDROGYNOUS: 4 = 4;
 
-export type LvovichGenderT = typeof MALE | typeof FEMALE | typeof ANDROGYNOUS | null;
+export type GenderConstT = typeof MALE | typeof FEMALE | typeof ANDROGYNOUS;
 
-export type LvovichGenderStrT = 'male' | 'female' | 'androgynous' | LvovichGenderT;
+export type GenderStrT = 'male' | 'female' | 'androgynous';
 
 export type FioT = {
   first?: ?string,
@@ -17,55 +17,71 @@ export type FioT = {
   middle?: ?string,
 };
 
-export type LvovichGenderRulesT = {
+export type GenderRulesT = {|
   androgynous?: string[],
   female?: string[],
   male?: string[],
-};
+|};
 
-export type LvovichGenderRuleSetT = {
-  exceptions?: LvovichGenderRulesT,
-  suffixes?: LvovichGenderRulesT,
-};
+export type GenderRuleSetT = {|
+  exceptions?: GenderRulesT,
+  suffixes?: GenderRulesT,
+|};
 
-export function getFirstnameGender(str: string): LvovichGenderT {
+export function getFG(str: string): ?GenderConstT {
   return getGenderByRuleSet(str, genderRules.firstname);
 }
 
-export function getLastnameGender(str: string): LvovichGenderT {
+export function getLG(str: string): ?GenderConstT {
   return getGenderByRuleSet(str, genderRules.lastname);
 }
 
-export function getMiddlenameGender(str: string): LvovichGenderT {
+export function getMG(str: string): ?GenderConstT {
   return getGenderByRuleSet(str, genderRules.middlename);
 }
 
-export function mergeGenders(g1: LvovichGenderT, g2: LvovichGenderT): LvovichGenderT {
-  if (!g1 || g1 === ANDROGYNOUS) return g2 || g1;
-  if (!g2 || g2 === ANDROGYNOUS) return g1 || g2;
+export function getFirstnameGender(str: string): ?GenderStrT {
+  return convertGenderStr(getFG(str));
+}
+
+export function getLastnameGender(str: string): ?GenderStrT {
+  return convertGenderStr(getLG(str));
+}
+
+export function getMiddlenameGender(str: string): ?GenderStrT {
+  return convertGenderStr(getMG(str));
+}
+
+export function mergeGenders(g1: ?GenderConstT, g2: ?GenderConstT): ?GenderConstT {
+  if (g1 === ANDROGYNOUS) return g2;
+  if (g2 === ANDROGYNOUS) return g1;
   if (g1 === g2) return g1;
   return null;
 }
 
-export function getGender(fio: FioT): LvovichGenderT {
-  let result = null;
+export function _getGender(fio: FioT): ?GenderConstT {
+  let result = ANDROGYNOUS;
 
   if (fio.middle) {
-    result = mergeGenders(result, getMiddlenameGender(fio.middle.trim()));
+    result = mergeGenders(result, getMG(fio.middle.trim()));
   }
 
   if (fio.first) {
-    result = mergeGenders(result, getFirstnameGender(fio.first.trim()));
+    result = mergeGenders(result, getFG(fio.first.trim()));
   }
 
   if (fio.last) {
-    result = mergeGenders(result, getLastnameGender(fio.last.trim()));
+    result = mergeGenders(result, getLG(fio.last.trim()));
   }
 
   return result;
 }
 
-export function getGenderByRuleSet(name: string, ruleSet: LvovichGenderRuleSetT): LvovichGenderT {
+export function getGender(fio: FioT): ?GenderStrT {
+  return convertGenderStr(_getGender(fio));
+}
+
+export function getGenderByRuleSet(name: string, ruleSet: GenderRuleSetT): ?GenderConstT {
   if (!name || !ruleSet) {
     return null;
   }
@@ -85,9 +101,9 @@ export function getGenderByRuleSet(name: string, ruleSet: LvovichGenderRuleSetT)
 }
 
 export function getGenderByRule(
-  rules: LvovichGenderRulesT,
+  rules: GenderRulesT,
   matchFn: (some: string) => boolean
-): LvovichGenderT {
+): ?GenderConstT {
   const genders = Object.keys(rules).filter(genderKey => {
     const array = rules[genderKey];
     return Array.isArray(array) && array.some(matchFn);
@@ -98,7 +114,7 @@ export function getGenderByRule(
       const array = rules[genderKey];
       if (Array.isArray(array) && array.some(matchFn)) {
         // eslint-disable-next-line
-        console.log(genderKey, array);
+        // console.log(genderKey, array);
       }
     });
 
@@ -107,7 +123,7 @@ export function getGenderByRule(
   return getGenderConst(genders[0]);
 }
 
-export function getGenderConst(key: string | LvovichGenderStrT): LvovichGenderT {
+export function getGenderConst(key: ?GenderStrT | GenderConstT): ?GenderConstT {
   switch (key) {
     case 'male':
     case MALE:
@@ -123,7 +139,7 @@ export function getGenderConst(key: string | LvovichGenderStrT): LvovichGenderT 
   }
 }
 
-export function getGenderStr(cnst: LvovichGenderStrT): ?string {
+export function convertGenderStr(cnst: ?GenderStrT | GenderConstT): ?GenderStrT {
   switch (cnst) {
     case 'male':
     case MALE:

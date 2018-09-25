@@ -1,212 +1,192 @@
-<p align="center"><img src="https://raw.githubusercontent.com/graphql-compose/graphql-compose/master/docs/logo.png" width="200" /></p>
+# Lvovich
 
-# GraphQL-compose
-
-[![](https://img.shields.io/npm/v/graphql-compose.svg)](https://www.npmjs.com/package/graphql-compose)
-[![codecov coverage](https://img.shields.io/codecov/c/github/graphql-compose/graphql-compose.svg)](https://codecov.io/github/graphql-compose/graphql-compose)
-[![Travis](https://img.shields.io/travis/graphql-compose/graphql-compose.svg?maxAge=2592000)](https://travis-ci.org/graphql-compose/graphql-compose)
-[![npm](https://img.shields.io/npm/dt/graphql-compose.svg)](http://www.npmtrends.com/graphql-compose)
+[![npm](https://img.shields.io/npm/v/lvovich.svg)](https://www.npmjs.com/package/lvovich)
+[![codecov coverage](https://img.shields.io/codecov/c/github/nodkz/lvovich.svg)](https://codecov.io/github/nodkz/lvovich)
+[![Travis](https://img.shields.io/travis/nodkz/lvovich.svg?maxAge=2592000)](https://travis-ci.org/nodkz/lvovich)
+[![npmtrends](https://img.shields.io/npm/dt/lvovich.svg)](http://www.npmtrends.com/lvovich)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 ![TypeScript compatible](https://img.shields.io/badge/typescript-compatible-brightgreen.svg)
 ![FlowType compatible](https://img.shields.io/badge/flowtype-compatible-brightgreen.svg)
-[![Backers on Open Collective](https://opencollective.com/graphql-compose/backers/badge.svg)](#backers)
-[![Sponsors on Open Collective](https://opencollective.com/graphql-compose/sponsors/badge.svg)](#sponsors)
 
-[GraphQL](http://graphql.org/) – is a query language for APIs. [graphql-js](https://github.com/graphql/graphql-js) is the reference implementation of GraphQL for nodejs which introduce GraphQL type system for describing schema _(definition over configuration)_ and executes queries on the server side. [express-graphql](https://github.com/graphql/express-graphql) is a HTTP server which gets request data, passes it to `graphql-js` and returned result passes to response.
+Этот пакет для:
 
-**`graphql-compose`** – the _imperative tool_ which worked on top of `graphql-js`. It provides some methods for creating types and GraphQL Models (so I call types with a list of common resolvers) for further building of complex relations in your schema.
+- склонение названий городов
+- определения пола по имени фамилии и отчеству
+- склонения падежей русских имен, фамилий и отчеств
 
-* provides methods for editing GraphQL output/input types (add/remove fields/args/interfaces)
-* introduces `Resolver`s – the named graphql fieldConfigs, which can be used for finding, updating, removing records
-* provides an easy way for creating relations between types via `Resolver`s
-* provides converter from `OutputType` to `InputType`
-* provides `projection` parser from AST
-* provides `GraphQL schema language` for defining simple types
-* adds additional types `Date`, `Json`
+Может использоваться как в браузере так и на сервере. Для генерации SEO-заголовков, где есть названия городов самое то.
 
-**`graphql-compose-[plugin]`** – is a _declarative generators/plugins_ that build on top of `graphql-compose`, which take some ORMs, schema definitions and creates GraphQL Models from them or modify existed GraphQL Types.
+## Cклонение названий городов
 
-Type generator plugins:
-
-* [graphql-compose-json](https://github.com/graphql-compose/graphql-compose-json) - generates GraphQL type from JSON (a good helper for wrapping REST APIs)
-* [graphql-compose-mongoose](https://github.com/graphql-compose/graphql-compose-mongoose) - generates GraphQL types from mongoose (MongoDB models) with Resolvers.
-* [graphql-compose-elasticsearch](https://github.com/graphql-compose/graphql-compose-elasticsearch) - generates GraphQL types from elastic mappings; ElasticSearch REST API proxy via GraphQL.
-* [graphql-compose-aws](https://github.com/graphql-compose/graphql-compose-aws) - expose AWS Cloud API via GraphQL
-
-Utility plugins:
-
-* [graphql-compose-relay](https://github.com/graphql-compose/graphql-compose-relay) - reassemble GraphQL types with `Relay` specific things, like `Node` type and interface, `globalId`, `clientMutationId`.
-* [graphql-compose-connection](https://github.com/graphql-compose/graphql-compose-connection) - generates `connection` Resolver from `findMany` and `count` Resolvers.
-* [graphql-compose-dataloader](https://github.com/stoffern/graphql-compose-dataloader) - add DataLoader to graphql-composer resolvers.
-
-## Documentation
-
-[graphql-compose.github.io](https://graphql-compose.github.io/)
-
-## Live Demos
-
-* [graphql-compose.herokuapp.com](https://graphql-compose.herokuapp.com/) - Live demo of GraphQL Server (9 models, 14 files, ~750 LOC)
-* [nodkz.github.io/relay-northwind](https://nodkz.github.io/relay-northwind) - Live demo of Relay client working with the server above (8 crazy pages, 47 files, ~3000 LOC)
-
-## Example
-
-city.js
+### `cityIn(name: string, gender?: GenderStrT): string` - в каком городе живете/находитесь? (предложный падеж)
 
 ```js
-import { TypeComposer} from 'graphql-compose';
-import { CountryTC } from './country';
-
-export const CityTC = TypeComposer.create(`
-  type City {
-    code: String!
-    name: String!
-    population: Number
-    countryCode: String
-    tz: String
-  }
-`);
-
-// Define some additional fields
-CityTC.addFields({
-  ucName: { // standard GraphQL like field definition
-    type: GraphQLString,
-    resolve: (source) => source.name.toUpperCase(),
-  },
-  currentLocalTime: { // extended GraphQL Compose field definition
-    type: 'Date',
-    resolve: (source) => moment().tz(source.tz).format(),
-    projection: { tz: true }, // load `tz` from database, when requested only `localTime` field
-  },
-  counter: 'Int', // shortening for only type definition for field
-  complex: `type ComplexType {
-    subField1: String
-    subField2: Float
-    subField3: Boolean
-    subField4: ID
-    subField5: JSON
-    subField6: Date
-  }`,
-  list0: {
-    type: '[String]',
-    description: 'Array of strings',
-  },
-  list1: '[String]',
-  list2: ['String'],
-  list3: [new GraphQLOutputType(...)],
-  list4: [`type Complex2Type { f1: Float, f2: Int }`],
-});
-
-// Add resolver method
-CityTC.addResolver({
-  kind: 'query',
-  name: 'findMany',
-  args: {
-    filter: `input CityFilterInput {
-      code: String!
-    }`,
-    limit: {
-      type: 'Int',
-      defaultValue: 20,
-    },
-    skip: 'Int',
-    // ... other args if needed
-  },
-  type: [CityTC], // array of cities
-  resolve: async ({ args, context }) => {
-    return context.someCityDB
-      .findMany(args.filter)
-      .limit(args.limit)
-      .skip(args.skip);
-  },
-});
-
-// Add relation between City and Country by `countryCode` field.
-CityTC.addRelation( // GraphQL relation definition
-  'country',
-  {
-    resolver: () => CountryTC.getResolver('findOne'),
-    prepareArgs: {
-      filter: source => ({ code: `${source.countryCode}` }),
-    },
-    projection: { countryCode: true },
-  }
-);
-
-// Remove `tz` field from schema
-CityTC.removeField('tz');
-
-// Add description to field
-CityTC.extendField('name', {
-  description: 'City name',
-});
+  cityIn('Санкт-Петербург'); // вернет `Санкт-Петербурге`
 ```
 
-schema.js
+### `cityFrom(name: string, gender?: GenderStrT): string` - из какого города приехали? (родительный падеж)
 
 ```js
-import { schemaComposer } from 'graphql-compose';
-import { CityTC } from './city';
-import { CountryTC } from './country';
+  cityFrom('Санкт-Петербург'); // вернет `Санкт-Петербурга`
+```
 
-schemaComposer.Query.addFields({
-  cities: CityTC.getResolver('findMany'),
-  country: CountryTC.getResolver('findOne'),
-  currentTime: {
-    type: 'Date',
-    resolve: () => Date.now(),
-  },
-});
+### `cityTo(name: string): string` - в какой город направляетесь? (направительный или посылательный падеж :)
 
-schemaComposer.Mutation.addFields({
-  createCity: CityTC.getResolver('createOne'),
-  updateCity: CityTC.getResolver('updateById'),
-  ...adminAccess({
-    removeCity: CityTC.getResolver('removeById'),
-  }),
-});
+```js
+  cityTo('Санкт-Петербург'); // вернет `Санкт-Петербург`
+  cityTo('Москва'); // вернет `Москву`
+```
 
-function adminAccess(resolvers) {
-  Object.keys(resolvers).forEach(k => {
-    resolvers[k] = resolvers[k].wrapResolve(next => rp => {
-      // rp = resolveParams = { source, args, context, info }
-      if (!rp.context.isAdmin) {
-        throw new Error('You should be admin, to have access to this action.');
-      }
-      return next(rp);
-    });
-  });
-  return resolvers;
+## Определения пола по имени фамилии и отчеству
+
+Методы определения пола возвращают тип `GenderStrT`:
+
+- `male` - мужской,
+- `female` - женский,
+- `androgynous` - может быть и мальчиком и девочкой
+- `null` - не удалось определить пол
+
+### `getGender(fio: FioT): ?GenderStrT` - передаете ФИО, получаете пол
+
+Входящий аргумент `fio` являеется объектов со следующими необязательными полями:
+
+```js
+type FioT = {
+  first?: ?string,
+  last?: ?string,
+  middle?: ?string,
 }
-
-export default schemaComposer.buildSchema();
 ```
 
-## Contributors
+```js
+  getGender({ last: 'Друзь', first: 'Саша', middle: 'Петрович' }); // вернет `male`
+  getGender({ first: 'Саша' }); // вернет `androgynous`, т.к. может быть мальчик или девочка
+  getGender({ first: 'Саша', middle: 'Петровна'  }); // вернет `female`
+  getGender({ last: 'Абуова', first: 'Андрей' }); // вернет `null`, ну нафиг гадать т.к. вроде фамилия женская и имя мужское.
+```
 
-This project exists thanks to all the people who contribute.
-<a href="graphs/contributors"><img src="https://opencollective.com/graphql-compose/contributors.svg?width=890&button=false" /></a>
+### `getFirstnameGender(str: string): ?GenderStrT` - вернет пол для Имени
 
-## Backers
+```js
+  getFirstnameGender('Павел'); // вернет `male`
+  getFirstnameGender('Анна'); // вернет `female`
+  getFirstnameGender('Саша'); // вернет `androgynous`
+  getFirstnameGender('аааа'); // вернет `null`
+```
 
-Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com/graphql-compose#backer)]
+### `getLastnameGender(str: string): ?GenderStrT` - вернет пол для Фамилии
 
-<a href="https://opencollective.com/graphql-compose#backers" target="_blank"><img src="https://opencollective.com/graphql-compose/backers.svg?width=890"></a>
+```js
+  getLastnameGender('Градский'); // вернет `male`
+  getLastnameGender('Таптыгина'); // вернет `female`
+  getLastnameGender('Борейко'); // вернет `androgynous`
+  getLastnameGender('аааа'); // вернет `null`
+```
 
-## Sponsors
+### `getMiddlenameGender(str: string): ?GenderStrT` - вернет пол для Отчества
 
-Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/graphql-compose#sponsor)]
+```js
+  getMiddlenameGender('Павлович'); // вернет `male`
+  getMiddlenameGender('Петрова'); // вернет `female`
+  getMiddlenameGender('иваново'); // вернет `null`
+  getMiddlenameGender('аааа'); // вернет `null`
+```
 
-<a href="https://opencollective.com/graphql-compose/sponsor/0/website" target="_blank"><img src="https://opencollective.com/graphql-compose/sponsor/0/avatar.svg"></a>
-<a href="https://opencollective.com/graphql-compose/sponsor/1/website" target="_blank"><img src="https://opencollective.com/graphql-compose/sponsor/1/avatar.svg"></a>
-<a href="https://opencollective.com/graphql-compose/sponsor/2/website" target="_blank"><img src="https://opencollective.com/graphql-compose/sponsor/2/avatar.svg"></a>
-<a href="https://opencollective.com/graphql-compose/sponsor/3/website" target="_blank"><img src="https://opencollective.com/graphql-compose/sponsor/3/avatar.svg"></a>
-<a href="https://opencollective.com/graphql-compose/sponsor/4/website" target="_blank"><img src="https://opencollective.com/graphql-compose/sponsor/4/avatar.svg"></a>
-<a href="https://opencollective.com/graphql-compose/sponsor/5/website" target="_blank"><img src="https://opencollective.com/graphql-compose/sponsor/5/avatar.svg"></a>
-<a href="https://opencollective.com/graphql-compose/sponsor/6/website" target="_blank"><img src="https://opencollective.com/graphql-compose/sponsor/6/avatar.svg"></a>
-<a href="https://opencollective.com/graphql-compose/sponsor/7/website" target="_blank"><img src="https://opencollective.com/graphql-compose/sponsor/7/avatar.svg"></a>
-<a href="https://opencollective.com/graphql-compose/sponsor/8/website" target="_blank"><img src="https://opencollective.com/graphql-compose/sponsor/8/avatar.svg"></a>
-<a href="https://opencollective.com/graphql-compose/sponsor/9/website" target="_blank"><img src="https://opencollective.com/graphql-compose/sponsor/9/avatar.svg"></a>
+## Cклонения падежей русских имен, фамилий и отчеств
 
-## License
+Падежи (тип `DeclentionStrT`):
 
-[MIT](https://github.com/graphql-compose/graphql-compose/blob/master/LICENSE.md)
+- `nominative` - именительный (кто? что?)
+- `genitive` - родительный (кого? чего?)
+- `dative` - дательный (кому? чему?)
+- `accusative` - винительный (кого? что?)
+- `instrumental` - творительный (кем? чем?)
+- `prepositional` - предложный (о ком? о чем?)
+
+### `lvovich(person: LvovichPersonT, declension?: DeclentionStrT): LvovichPersonT` - просклонять по падежам
+
+Если не указан `declension`, то будет использован винительный падеж.
+
+```js
+  lvovich({ first: 'Саша', last: 'Иванов' }, 'dative');
+  // вернет { first: 'Саше', last: 'Иванову', gender: 'male' }
+
+  lvovich({ first: 'Паша' }, 'instrumental');
+  // вернет { first: 'Пашей', gender: 'male' })
+```
+
+Тип `LvovichPersonT` для `lvovich(person: LvovichPersonT)` является объектом с необязательными полями:
+
+```js
+{
+  first?: ?string,
+  last?: ?string,
+  middle?: ?string,
+  gender?: ?GenderStrT,
+}
+```
+
+### `inclineFirstname(str: string, declension?: DeclentionStrT, gender?: GenderStrT): string` - просклонять Имя по падежам
+
+Если пол `gender` не указан, то будет запущено автоопределение, если не указано склонение `declension` то будет применен винительный падеж.
+
+```js
+  inclineFirstname('Павел', 'genitive'); // вернет 'Павла'
+  inclineFirstname('Женя', 'instrumental'); // вернет 'Женя'
+  inclineFirstname('Женя', 'instrumental', 'male'); // вернет 'Женей'
+  inclineFirstname('Женя', 'instrumental', 'female'); // вернет 'Женей'
+```
+
+### `inclineLastname(str: string, declension?: DeclentionStrT, gender?: GenderStrT): string` - просклонять Фамилию по падежам
+
+```js
+  inclineLastname('Иванова', 'genitive'); // вернет 'Ивановой'
+  inclineLastname('Петросян', 'instrumental'); // вернет 'Петросян'
+  inclineLastname('Петросян', 'instrumental', 'male'); // вернет 'Петросяном'
+```
+
+### `inclineMiddlename(str: string, declension?: DeclentionStrT, gender?: GenderStrT): string` - просклонять Отчество по падежам
+
+```js
+  inclineMiddlename('Львович', 'genitive'); // вернет 'Львовича'
+```
+
+## Установка
+
+Используйте npm:
+
+```bash
+npm install lvovich
+```
+
+Или импорт напрямую:
+
+```html
+<script src="https://raw.github.com/nodkz/lvovich/master/dist/lvovich.min.js"></script>
+```
+
+## Разработчику
+
+Сборка новой версии пакета происходит автоматически через [semantic-release](https://github.com/semantic-release/semantic-release) и Travis. Ваши изменения я могу опубликовать хоть с телефона.
+
+От вас просто необходимо склонировать репозиторий, внести изменения в код и открыть Pull Request.
+
+Клонирование репозитория и установка модулей:
+
+```bash
+git clone https://github.com/nodkz/lvovich.git
+cd lvovich
+yarn install
+```
+
+Тесты находятся в директории ```src/__tests__```. Запуск тестов:
+
+```bash
+yarn test
+```
+
+## Лицензия
+
+[MIT](./LICENSE.md)
+
+В основу этого пакета лег код и правила из [petrovich-js](https://github.com/petrovich/petrovich-js). Код был переписан и оптимизирован, часть правил была расширена. API полностью был изменен, и стал использовать `camelCase`.

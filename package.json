@@ -10,6 +10,11 @@
     "esm",
     "mjs"
   ],
+  "authors": [
+    "@thaumant <Elia Schelokov>",
+    "@dustalov <Dmitry Ustalov>",
+    "@nodkz <Pavel Chertorogov>"
+  ],
   "main": "lib/index.js",
   "module": "mjs/index.mjs",
   "types": "lib/index.d.ts",
@@ -72,7 +77,7 @@
     ]
   },
   "scripts": {
-    "build": "npm run build-cjs && npm run build-mjs && npm run build-esm",
+    "build": "npm run build-cjs && npm run build-mjs && npm run build-esm && build-umd",
     "build-umd": "rimraf umd && BABEL_ENV=umd NODE_ENV=production rollup src/index.js --config --sourcemap --output dist/lvovich.min.js",
     "build-cjs": "rimraf lib && BABEL_ENV=cjs babel src --ignore __tests__,__mocks__ -d lib && COPY_TO_FOLDER=lib npm run build-flow && COPY_TO_FOLDER=lib npm run build-ts",
     "build-esm": "rimraf esm && BABEL_ENV=esm babel src --ignore __tests__,__mocks__ -d esm && COPY_TO_FOLDER=esm npm run build-flow && COPY_TO_FOLDER=esm npm run build-ts",

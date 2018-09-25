@@ -2,7 +2,7 @@
 
 import { lvovich, inclineFirstname, inclineLastname, inclineMiddlename } from './incline';
 
-import { getFirstnameGender, getLastnameGender, getMiddlenameGender } from './gender';
+import { getFirstnameGender, getLastnameGender, getMiddlenameGender, getGender } from './gender';
 
 import { cityIn, cityFrom, cityTo } from './city';
 
@@ -11,6 +11,7 @@ export {
   inclineFirstname,
   inclineLastname,
   inclineMiddlename,
+  getGender,
   getFirstnameGender,
   getLastnameGender,
   getMiddlenameGender,

@@ -1,7 +1,9 @@
+/* @flow */
+
 import readline from 'readline';
 import path from 'path';
 import fs from 'fs';
-import { getFirstnameGender, getLastnameGender, MALE, FEMALE, ANDROGYNOUS } from '../gender';
+import { getFG, getLG, MALE, FEMALE, ANDROGYNOUS } from '../gender';
 
 describe('data set tests', () => {
   it('firstnames.gender.tsv', done => {
@@ -32,7 +34,7 @@ describe('data set tests', () => {
           gender = null;
       }
       if (gender && !err) {
-        const g = getFirstnameGender(name);
+        const g = getFG(name);
         if (g === null) {
           counters.skipped.push(name);
           counters.skipWithoutRules += 1;
@@ -40,7 +42,7 @@ describe('data set tests', () => {
         }
 
         try {
-          expect(`${name} ${g}`).toEqual(`${name} ${gender}`);
+          expect(`${name} ${g || ''}`).toEqual(`${name} ${gender}`);
           counters.success += 1;
         } catch (e) {
           err = e;
@@ -90,7 +92,7 @@ describe('data set tests', () => {
       }
 
       if (gender && !err) {
-        const g = getLastnameGender(name);
+        const g = getLG(name);
         if (g === null) {
           counters.skipped.push(name);
           counters.skipWithoutRules += 1;
@@ -98,7 +100,7 @@ describe('data set tests', () => {
         }
 
         try {
-          expect(`${name} ${g}`).toEqual(`${name} ${gender}`);
+          expect(`${name} ${g || ''}`).toEqual(`${name} ${gender}`);
           counters.success += 1;
         } catch (e) {
           err = e;
