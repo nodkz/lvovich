@@ -77,8 +77,8 @@
     ]
   },
   "scripts": {
-    "build": "npm run build-cjs && npm run build-mjs && npm run build-esm && build-umd",
-    "build-umd": "rimraf umd && BABEL_ENV=umd NODE_ENV=production rollup src/index.js --config --sourcemap --output dist/lvovich.min.js",
+    "build": "npm run build-cjs && npm run build-mjs && npm run build-esm && npm run build-umd",
+    "build-umd": "rimraf umd && BABEL_ENV=umd NODE_ENV=production rollup src/index.js --config --sourcemap --file dist/lvovich.min.js",
     "build-cjs": "rimraf lib && BABEL_ENV=cjs babel src --ignore __tests__,__mocks__ -d lib && COPY_TO_FOLDER=lib npm run build-flow && COPY_TO_FOLDER=lib npm run build-ts",
     "build-esm": "rimraf esm && BABEL_ENV=esm babel src --ignore __tests__,__mocks__ -d esm && COPY_TO_FOLDER=esm npm run build-flow && COPY_TO_FOLDER=esm npm run build-ts",
     "build-mjs": "rimraf mjs && BABEL_ENV=mjs babel src --ignore __tests__,__mocks__ -d mjs && yarn build-mjs-rename && COPY_TO_FOLDER=mjs npm run build-flow",
