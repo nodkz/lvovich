@@ -43,6 +43,7 @@ node_modules
 /lib
 /esm
 /mjs
+/dist
 
 coverage
 .nyc_output
