@@ -2,13 +2,13 @@
 /* eslint-disable no-use-before-define, no-continue, arrow-parens */
 
 import { getGender, getFirstnameGender, getLastnameGender, getMiddlenameGender } from './gender';
-import { constantizeGenderInRules, inclineByRules } from './rules';
-import rulesLastname from './inclineRulesLastname';
-import rulesMiddlename from './inclineRulesMiddlename';
-import rulesFirstname from './inclineRulesFirstname';
+import { constantizeGenderInRules, inclineByRules } from './inclineRules';
+import rulesLastname from './rules/inclineRulesLastname';
+import rulesMiddlename from './rules/inclineRulesMiddlename';
+import rulesFirstname from './rules/inclineRulesFirstname';
 
 import type { LvovichGenderStrT } from './gender';
-import type { LvovichDeclentionStrT } from './rules';
+import type { LvovichDeclentionStrT } from './inclineRules';
 
 constantizeGenderInRules(rulesLastname);
 constantizeGenderInRules(rulesMiddlename);

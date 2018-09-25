@@ -1,7 +1,7 @@
 /* @flow */
 /* eslint-disable no-use-before-define, arrow-parens */
 
-import genderRules from './genderRules';
+import genderRules from './rules/genderRules';
 
 export const MALE: 1 = 1;
 export const FEMALE: 2 = 2;

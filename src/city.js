@@ -9,9 +9,9 @@ import {
   findRule,
   applyRule,
   applyMod,
-} from './rules';
+} from './inclineRules';
 import { inclineFirstname } from './incline';
-import { frozenWords, frozenParts, frozenPartsAfter, customInflections } from './cityRules';
+import { frozenWords, frozenParts, frozenPartsAfter, customInflections } from './rules/cityRules';
 import type { LvovichGenderStrT } from './gender';
 
 constantizeGenderInRules(customInflections);

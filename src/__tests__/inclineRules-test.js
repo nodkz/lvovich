@@ -14,7 +14,7 @@ import {
   findRule,
   inclineByRules,
   applyMod,
-} from '../rules';
+} from '../inclineRules';
 
 import { MALE, FEMALE, ANDROGYNOUS } from '../gender';
 

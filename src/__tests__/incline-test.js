@@ -13,6 +13,13 @@ describe('lvovich/incline', () => {
       });
     });
 
+    it('should autodetect gender and incline person', () => {
+      expect(lvovich({ first: 'Паша' }, 'instrumental')).toEqual({
+        first: 'Пашей',
+        gender: MALE,
+      });
+    });
+
     it('should incline person with androgynous name', () => {
       expect(lvovich({ first: 'Саша' }, 'dative')).toEqual({
         first: 'Саше',
