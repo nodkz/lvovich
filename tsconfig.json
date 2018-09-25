@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "strict": true,
+    "lib": ["es2017", "esnext.asynciterable"]
+  },
+  "include": ["src/**/*.d.ts", "src/**/*.spec.ts"],
+  "exclude": [
+    "./node_modules"
+  ]
+}
