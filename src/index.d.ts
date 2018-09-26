@@ -1,5 +1,5 @@
 export {
-  lvovich,
+  incline,
   inclineFirstname,
   inclineLastname,
   inclineMiddlename,

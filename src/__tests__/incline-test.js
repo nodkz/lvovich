@@ -1,29 +1,29 @@
 /* @flow */
 
-import { lvovich, inclineFirstname, inclineLastname, inclineMiddlename } from '../incline';
+import { incline, inclineFirstname, inclineLastname, inclineMiddlename } from '../incline';
 
 describe('lvovich/incline', () => {
   describe('lvovich()', () => {
     it('should autodetect gender and incline person', () => {
-      expect(lvovich({ first: 'Павел' }, 'dative')).toEqual({
+      expect(incline({ first: 'Павел' }, 'dative')).toEqual({
         first: 'Павлу',
         gender: 'male',
       });
     });
 
     it('should autodetect gender and incline person', () => {
-      expect(lvovich({ first: 'Паша' }, 'instrumental')).toEqual({
+      expect(incline({ first: 'Паша' }, 'instrumental')).toEqual({
         first: 'Пашей',
         gender: 'male',
       });
     });
 
     it('should incline person with androgynous name', () => {
-      expect(lvovich({ first: 'Саша' }, 'dative')).toEqual({
+      expect(incline({ first: 'Саша' }, 'dative')).toEqual({
         first: 'Саше',
         gender: 'androgynous',
       });
-      expect(lvovich({ first: 'Саша', last: 'Иванов' }, 'dative')).toEqual({
+      expect(incline({ first: 'Саша', last: 'Иванов' }, 'dative')).toEqual({
         first: 'Саше',
         last: 'Иванову',
         gender: 'male',

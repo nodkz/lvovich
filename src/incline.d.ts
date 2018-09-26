@@ -26,7 +26,7 @@ export function inclineMiddlename(
   gender?: GenderStrT | null,
 ): string;
 
-export function lvovich(
+export function incline(
   person: LvovichPersonT,
   declension?: DeclentionStrT,
 ): LvovichPersonT;

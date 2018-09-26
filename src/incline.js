@@ -45,7 +45,7 @@ export function inclineMiddlename(
   return inclineByRules(str, declension, gender || getMG(str), rulesMiddlename);
 }
 
-export function lvovich(
+export function incline(
   person: $Shape<LvovichPersonT>,
   declension?: DeclentionStrT
 ): LvovichPersonT {

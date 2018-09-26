@@ -4,6 +4,7 @@ import nodeResolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
 import babel from 'rollup-plugin-babel';
 import { uglify } from 'rollup-plugin-uglify';
+import gzip from 'rollup-plugin-gzip';
 
 export default {
   output: {
@@ -24,5 +25,6 @@ export default {
         warnings: false,
       },
     }),
+    gzip(),
   ],
 };

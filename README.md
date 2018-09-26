@@ -1,4 +1,4 @@
-# Lvovich
+# Lvovich (Львович) - JS library to inflect people names, cities names in Russian
 
 [![npm](https://img.shields.io/npm/v/lvovich.svg)](https://www.npmjs.com/package/lvovich)
 [![codecov coverage](https://img.shields.io/codecov/c/github/nodkz/lvovich.svg)](https://codecov.io/github/nodkz/lvovich)
@@ -10,13 +10,19 @@
 
 Этот пакет для:
 
-- склонение названий городов
+- склонение названий городов (работает для большинства составных названий: Санкт-Петербург, Ростов-на-Дону и пр.)
 - определения пола по имени фамилии и отчеству
 - склонения падежей русских имен, фамилий и отчеств
 
 Может использоваться как в браузере так и на сервере. Для генерации SEO-заголовков, где есть названия городов самое то.
 
+Минифицированный размер 20KB, gzipped 6KB.
+
 ## Cклонение названий городов
+
+```js
+import { cityIn, cityFrom, cityTo } from 'lvovich';
+```
 
 ### `cityIn(name: string, gender?: GenderStrT): string` - в каком городе живете/находитесь? (предложный падеж)
 
@@ -38,6 +44,10 @@
 ```
 
 ## Определения пола по имени фамилии и отчеству
+
+```js
+import { getGender, getFirstnameGender, getLastnameGender, getMiddlenameGender } from 'lvovich';
+```
 
 Методы определения пола возвращают тип `GenderStrT`:
 
@@ -94,6 +104,10 @@ type FioT = {
 
 ## Cклонения падежей русских имен, фамилий и отчеств
 
+```js
+import { incline, inclineFirstname, inclineLastname, inclineMiddlename } from 'lvovich';
+```
+
 Падежи (тип `DeclentionStrT`):
 
 - `nominative` - именительный (кто? что?)
@@ -103,19 +117,19 @@ type FioT = {
 - `instrumental` - творительный (кем? чем?)
 - `prepositional` - предложный (о ком? о чем?)
 
-### `lvovich(person: LvovichPersonT, declension?: DeclentionStrT): LvovichPersonT` - просклонять по падежам
+### `incline(person: LvovichPersonT, declension?: DeclentionStrT): LvovichPersonT` - просклонять по падежам
 
 Если не указан `declension`, то будет использован винительный падеж.
 
 ```js
-  lvovich({ first: 'Саша', last: 'Иванов' }, 'dative');
+  incline({ first: 'Саша', last: 'Иванов' }, 'dative');
   // вернет { first: 'Саше', last: 'Иванову', gender: 'male' }
 
-  lvovich({ first: 'Паша' }, 'instrumental');
+  incline({ first: 'Паша' }, 'instrumental');
   // вернет { first: 'Пашей', gender: 'male' })
 ```
 
-Тип `LvovichPersonT` для `lvovich(person: LvovichPersonT)` является объектом с необязательными полями:
+Тип `LvovichPersonT` для `incline(person: LvovichPersonT)` является объектом с необязательными полями:
 
 ```js
 {
@@ -162,6 +176,8 @@ npm install lvovich
 Или импорт напрямую:
 
 ```html
+<script src="https://cdn.jsdelivr.net/npm/lvovich/dist/lvovich.min.js"></script>
+или
 <script src="https://raw.github.com/nodkz/lvovich/master/dist/lvovich.min.js"></script>
 ```
 

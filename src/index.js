@@ -1,13 +1,13 @@
 /* @flow */
 
-import { lvovich, inclineFirstname, inclineLastname, inclineMiddlename } from './incline';
+import { incline, inclineFirstname, inclineLastname, inclineMiddlename } from './incline';
 
 import { getFirstnameGender, getLastnameGender, getMiddlenameGender, getGender } from './gender';
 
 import { cityIn, cityFrom, cityTo } from './city';
 
 export {
-  lvovich,
+  incline,
   inclineFirstname,
   inclineLastname,
   inclineMiddlename,
