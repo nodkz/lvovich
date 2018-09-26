@@ -167,18 +167,22 @@ import { incline, inclineFirstname, inclineLastname, inclineMiddlename } from 'l
 
 ## Установка
 
-Используйте npm:
+Через npm:
 
 ```bash
 npm install lvovich
 ```
 
-Или импорт напрямую:
+Или в браузере:
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/lvovich/dist/lvovich.min.js"></script>
-или
-<script src="https://raw.github.com/nodkz/lvovich/master/dist/lvovich.min.js"></script>
+<script>
+  var city = 'Москва';
+  document.writeln('Найдено в ' + lvovich.cityIn(city) + '<br/>');
+  document.writeln('Из ' + lvovich.cityFrom(city) + '<br/>');
+  document.writeln('Еду в ' + lvovich.cityTo(city) + '<br/>');
+</script>
 ```
 
 ## Разработчику
