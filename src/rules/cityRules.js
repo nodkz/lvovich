@@ -70,18 +70,23 @@ export const customInflections: DeclensionRuleSetT = {
     },
     {
       gender: 'androgynous',
-      test: ['ий', 'ое'], // Волжский, Раменское
-      mods: ['--ого', '--ому', '', '-м', '--ом'],
+      test: ['ще'], // Хренище
+      mods: ['-а', '-у', '', 'м', ''],
     },
     {
       gender: 'androgynous',
-      test: ['ые'], // Набережные
+      test: ['чье'], // Щучье
+      mods: ['-я', '-ю', '', 'м', ''],
+    },
+    {
+      gender: 'androgynous',
+      test: ['ые', 'ие'], // Набережные
       mods: ['-х', '-м', '', '-ми', '-х'],
     },
     {
       gender: 'androgynous',
-      test: ['ий'], // Рижский
-      mods: ['--ого', '--ому', '--ого', '-ми', '-х'],
+      test: ['ий', 'ое'], // Рижский, Раменское
+      mods: ['--ого', '--ому', '', '-м', '--ом'],
     },
     {
       gender: 'androgynous',
