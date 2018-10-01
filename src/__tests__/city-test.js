@@ -301,5 +301,13 @@ describe('lvovich/city', () => {
       `
       );
     });
+
+    it('correct declension for other cities', () => {
+      expect3fn(
+        `
+        Тбилиси, Тбилиси, Тбилиси, Тбилиси
+      `
+      );
+    });
   });
 });

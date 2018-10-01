@@ -43,7 +43,7 @@ export const customInflections: DeclensionRuleSetT = {
   exceptions: [
     {
       gender: 'androgynous',
-      test: ['сочи'],
+      test: ['сочи', 'тбилиси'],
       mods: ['', '', '', '', ''],
     },
     {
