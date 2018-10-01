@@ -43,6 +43,11 @@ export const customInflections: DeclensionRuleSetT = {
   exceptions: [
     {
       gender: 'androgynous',
+      test: ['сочи'],
+      mods: ['', '', '', '', ''],
+    },
+    {
+      gender: 'androgynous',
       test: ['село'],
       mods: ['-а', '-у', '', 'м', '-е'],
     },
@@ -50,7 +55,7 @@ export const customInflections: DeclensionRuleSetT = {
   suffixes: [
     {
       gender: 'androgynous',
-      test: ['чёк', 'чек'], // Волочёк
+      test: ['чёк', 'чек'], // Волочёк, Чернечек
       mods: ['--ка', '--ку', '', '--ком', '--ке'],
     },
     {
@@ -60,18 +65,28 @@ export const customInflections: DeclensionRuleSetT = {
     },
     {
       gender: 'androgynous',
-      test: ['жний', 'хний', 'шний'], // Нижний, Вышний, Верхний
+      test: ['жний', 'хний', 'шний', 'щий'], // Нижний, Вышний, Верхний
       mods: ['--его', '--ему', '', '-м', '--ем'],
     },
     {
       gender: 'androgynous',
-      test: ['ще'], // Хренище
+      test: ['ще'], // Хлевище, Городище
       mods: ['-а', '-у', '', 'м', ''],
     },
     {
       gender: 'androgynous',
       test: ['чье'], // Щучье
       mods: ['-я', '-ю', '', 'м', ''],
+    },
+    {
+      gender: 'androgynous',
+      test: ['чь'], // Холмечь
+      mods: ['-и', '-и', '', 'ю', '-и'],
+    },
+    {
+      gender: 'androgynous',
+      test: ['чи'], // Чепеничи
+      mods: ['-ей', '-ам', '', '-ами', '-ах'],
     },
     {
       gender: 'androgynous',
