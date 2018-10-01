@@ -43,11 +43,6 @@ export const customInflections: DeclensionRuleSetT = {
   exceptions: [
     {
       gender: 'androgynous',
-      test: ['старый', 'новый', 'великий'],
-      mods: ['--ого', '--ому', '', '-м', '--ом'],
-    },
-    {
-      gender: 'androgynous',
       test: ['село'],
       mods: ['-а', '-у', '', 'м', '-е'],
     },
@@ -85,7 +80,7 @@ export const customInflections: DeclensionRuleSetT = {
     },
     {
       gender: 'androgynous',
-      test: ['ий', 'ое'], // Рижский, Раменское
+      test: ['ый', 'ий', 'ое'], // Рижский, Раменское
       mods: ['--ого', '--ому', '', '-м', '--ом'],
     },
     {
