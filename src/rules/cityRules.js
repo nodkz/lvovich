@@ -43,12 +43,7 @@ export const customInflections: DeclensionRuleSetT = {
   exceptions: [
     {
       gender: 'androgynous',
-      test: ['нижний', 'верхний'],
-      mods: ['--его', '--ему', '', '-м', '--ем'],
-    },
-    {
-      gender: 'androgynous',
-      test: ['верхний', 'старый', 'новый', 'великий'],
+      test: ['старый', 'новый', 'великий'],
       mods: ['--ого', '--ому', '', '-м', '--ом'],
     },
     {
@@ -58,6 +53,21 @@ export const customInflections: DeclensionRuleSetT = {
     },
   ],
   suffixes: [
+    {
+      gender: 'androgynous',
+      test: ['чёк', 'чек'], // Волочёк
+      mods: ['--ка', '--ку', '', '--ком', '--ке'],
+    },
+    {
+      gender: 'androgynous',
+      test: ['чик'], // Чик
+      mods: ['а', 'у', '', 'ом', 'е'],
+    },
+    {
+      gender: 'androgynous',
+      test: ['жний', 'хний', 'шний'], // Нижний, Вышний, Верхний
+      mods: ['--его', '--ему', '', '-м', '--ем'],
+    },
     {
       gender: 'androgynous',
       test: ['ий', 'ое'], // Волжский, Раменское
