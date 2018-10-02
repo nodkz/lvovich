@@ -27,7 +27,7 @@ PS. Если вдруг вы ищете список всех городов и 
 
 ## [Live Demo](https://codesandbox.io/s/nr8k2241wj)
 
-[![Live Demo](https://user-images.githubusercontent.com/1946920/46338422-f7fcf180-c651-11e8-9dab-39b6f45dc00d.png)](https://codesandbox.io/s/nr8k2241wj)
+[<img width="250" alt="screen shot 2018-10-02 at 14 54 55" src="https://user-images.githubusercontent.com/1946920/46338907-3ba42b00-c653-11e8-946c-5a54ba5177de.png">](https://codesandbox.io/s/nr8k2241wj)
 
 ## Cклонение названий городов
 
