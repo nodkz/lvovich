@@ -43,13 +43,8 @@ export const customInflections: DeclensionRuleSetT = {
   exceptions: [
     {
       gender: 'androgynous',
-      test: ['нижний', 'верхний'],
-      mods: ['--его', '--ему', '', '-м', '--ем'],
-    },
-    {
-      gender: 'androgynous',
-      test: ['верхний', 'старый', 'новый', 'великий'],
-      mods: ['--ого', '--ому', '', '-м', '--ом'],
+      test: ['сочи', 'тбилиси'],
+      mods: ['', '', '', '', ''],
     },
     {
       gender: 'androgynous',
@@ -60,18 +55,48 @@ export const customInflections: DeclensionRuleSetT = {
   suffixes: [
     {
       gender: 'androgynous',
-      test: ['ий', 'ое'], // Волжский, Раменское
-      mods: ['--ого', '--ому', '', '-м', '--ом'],
+      test: ['чёк', 'чек'], // Волочёк, Чернечек
+      mods: ['--ка', '--ку', '', '--ком', '--ке'],
     },
     {
       gender: 'androgynous',
-      test: ['ые'], // Набережные
+      test: ['чик'], // Чик
+      mods: ['а', 'у', '', 'ом', 'е'],
+    },
+    {
+      gender: 'androgynous',
+      test: ['жний', 'хний', 'шний', 'щий'], // Нижний, Вышний, Верхний
+      mods: ['--его', '--ему', '', '-м', '--ем'],
+    },
+    {
+      gender: 'androgynous',
+      test: ['ще'], // Хлевище, Городище
+      mods: ['-а', '-у', '', 'м', ''],
+    },
+    {
+      gender: 'androgynous',
+      test: ['чье'], // Щучье
+      mods: ['-я', '-ю', '', 'м', ''],
+    },
+    {
+      gender: 'androgynous',
+      test: ['чь'], // Холмечь
+      mods: ['-и', '-и', '', 'ю', '-и'],
+    },
+    {
+      gender: 'androgynous',
+      test: ['чи'], // Чепеничи
+      mods: ['-ей', '-ам', '', '-ами', '-ах'],
+    },
+    {
+      gender: 'androgynous',
+      test: ['ые', 'ие'], // Набережные
       mods: ['-х', '-м', '', '-ми', '-х'],
     },
     {
       gender: 'androgynous',
-      test: ['ий'], // Рижский
-      mods: ['--ого', '--ому', '--ого', '-ми', '-х'],
+      test: ['ый', 'ий', 'ое'], // Рижский, Раменское
+      mods: ['--ого', '--ому', '', '-м', '--ом'],
     },
     {
       gender: 'androgynous',
