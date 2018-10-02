@@ -71,7 +71,10 @@ export function _getGender(fio: FioT): ?GenderConstT {
   }
 
   if (fio.last) {
-    result = mergeGenders(result, getLG(fio.last.trim()));
+    const lastGender = getLG(fio.last.trim());
+    if (lastGender !== null) {
+      result = mergeGenders(result, lastGender);
+    }
   }
 
   return result;

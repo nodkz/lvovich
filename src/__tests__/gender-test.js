@@ -266,5 +266,23 @@ describe('lvovich/gender', () => {
         })
       ).toEqual(null);
     });
+
+    it('should skip null for lastname', () => {
+      expect(
+        getGender({
+          last: 'Шкарупа',
+          first: 'Евгений',
+          middle: 'Ваганович',
+        })
+      ).toEqual('male');
+
+      expect(
+        getGender({
+          last: 'Шкарупа',
+          first: 'Ольга',
+          middle: 'Александровна',
+        })
+      ).toEqual('female');
+    });
   });
 });
