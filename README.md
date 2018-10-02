@@ -19,10 +19,15 @@
 - для генерации красивых писем с [mjml](https://github.com/mjmlio/mjml)
 - для генерации PDF c [@react-pdf](https://github.com/diegomura/react-pdf)
 - для генерации SEO-заголовков c [головой на плечах](https://comic.browserling.com/seo-expert-ru.png)
+- чтоб по максимому избавляемся от **Уважаемый(-ая)**
 
 **Минифицированный размер пакета 20KB, gzipped 6KB.** Бедные, бедные иностранцы - им надо загрузить в голову 20 килобайт правил и уметь быстро ими пользоваться в разговорной речи. Ужос!
 
 PS. Если вдруг вы ищете список всех городов и сел с гео-координатами [России](https://maps.vlasenko.net/russia/ru-list.csv), [Белоруси](https://maps.vlasenko.net/belarus/by-list.csv) и [Украины](https://maps.vlasenko.net/ukraine/ua-list.csv) - их можно найти в формате csv на сайте [https://maps.vlasenko.net/](https://maps.vlasenko.net/).
+
+## [Live Demo](https://codesandbox.io/s/nr8k2241wj)
+
+[![Live Demo](https://user-images.githubusercontent.com/1946920/46338422-f7fcf180-c651-11e8-9dab-39b6f45dc00d.png)](https://codesandbox.io/s/nr8k2241wj)
 
 ## Cклонение названий городов
 
