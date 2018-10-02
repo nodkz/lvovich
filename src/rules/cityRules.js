@@ -114,5 +114,10 @@ export const customInflections: DeclensionRuleSetT = {
       test: ['ны'], // Челны
       mods: ['-ов', '-ам', '', '-ами', '-ах'],
     },
+    {
+      gender: 'androgynous',
+      test: ['ша'], // Ропша
+      mods: ['-и', '-е', '-у', '-ей', '-е'],
+    },
   ],
 };
