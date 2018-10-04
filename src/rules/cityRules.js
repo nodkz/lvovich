@@ -50,7 +50,7 @@ export const frozenParts = [
 ];
 
 // do not decline words after this words
-export const frozenPartsAfter = ['село', 'поселок', 'аул', 'город', 'деревня'];
+export const frozenPartsAfter = ['село', 'поселок', 'аул', 'город', 'деревня', 'урочище'];
 
 const cityInflections: DeclensionCityRuleSetT = {
   exceptions: [
@@ -85,6 +85,10 @@ const cityInflections: DeclensionCityRuleSetT = {
       mods: ['-я', '-ю', '', 'м', ''],
     },
     {
+      test: ['ель'], // норильский никель
+      mods: ['-я', '-ю', '', '-ем', '-е'],
+    },
+    {
       test: ['чь'], // Холмечь
       mods: ['-и', '-и', '', 'ю', '-и'],
     },
@@ -105,7 +109,7 @@ const cityInflections: DeclensionCityRuleSetT = {
       mods: ['--ой', '--ой', '--ую', '--ой', '--ой'],
     },
     {
-      test: ['иев'], // Сергиев Посад
+      test: ['гиев'], // Сергиев Посад, но не Киев
       mods: ['а', 'у', '', 'ым', 'ом'],
     },
     {
@@ -116,10 +120,32 @@ const cityInflections: DeclensionCityRuleSetT = {
       test: ['ша'], // Ропша
       mods: ['-и', '-е', '-у', '-ей', '-е'],
     },
+    {
+      test: [
+        'ры', // Чебоксары, Шушары
+        'цы', // Бельцы
+        'ды', // минеральные воды
+        'ги', // верхние киги
+      ],
+      mods: ['-', '-ам', '', '-ами', '-ах'],
+    },
+    {
+      test: ['амень'], // Камень, но не Тюмень
+      mods: ['---ня', '---ню', '', '---нем', '---не'],
+    },
+    {
+      test: [
+        'ьн', // Кёльн
+        'нц', // Гленц
+        'мм', // Гримм
+      ],
+      mods: ['а', 'у', '', 'ом', 'е'],
+    },
   ],
+  // Склонения городов можно подсмотреть тут https://ru.wiktionary.org/wiki/%D0%9A%D1%91%D0%BB%D1%8C%D0%BD
 };
 
 export const cityRules: DeclensionRuleSetT = {
-  exceptions: cityInflections.exceptions.map(o => ({ ...o, gender: ANDROGYNOUS })),
-  suffixes: cityInflections.suffixes.map(o => ({ ...o, gender: ANDROGYNOUS })),
+  exceptions: cityInflections.exceptions.map(o => ({ gender: ANDROGYNOUS, ...o })),
+  suffixes: cityInflections.suffixes.map(o => ({ gender: ANDROGYNOUS, ...o })),
 };

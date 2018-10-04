@@ -55,13 +55,22 @@ export function cityFrom(name: string, gender?: GenderStrT) {
 // в какой город направляетесь?
 export function cityTo(name: string) {
   if (!name) return name;
-  const nameLower = name.toLowerCase();
-  if (nameLower.endsWith('а')) {
-    return applyMod(name, '-у');
-  } else if (nameLower.endsWith('ая')) {
-    return applyMod(name, '--ую');
-  }
-  return name;
+  return name
+    .split(/(\s|-)/g)
+    .map((part, i, parts) => {
+      if (isFrozenPart(part, i, parts)) return part;
+
+      const partLower = part.toLowerCase();
+
+      if (partLower.endsWith('а')) {
+        return applyMod(part, '-у');
+      } else if (partLower.endsWith('ая')) {
+        return applyMod(part, '--ую');
+      }
+
+      return part;
+    })
+    .join('');
 }
 
 function isFrozen(str: string, words: string[]): boolean {
