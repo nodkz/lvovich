@@ -11,10 +11,10 @@ import {
   applyMod,
 } from './inclineRules';
 import { inclineFirstname } from './incline';
-import { frozenWords, frozenParts, frozenPartsAfter, customInflections } from './rules/cityRules';
+import { frozenWords, frozenParts, frozenPartsAfter, cityRules } from './rules/cityRules';
 import type { GenderStrT } from './gender';
 
-constantizeGenderInRules(customInflections);
+constantizeGenderInRules(cityRules);
 
 // предложный, в каком городе живете/находитесь?
 export function cityIn(name: string, gender?: GenderStrT) {
@@ -24,7 +24,7 @@ export function cityIn(name: string, gender?: GenderStrT) {
     .map((part, i, parts) => {
       if (isFrozenPart(part, i, parts)) return part;
 
-      const rule = findRule(part, ANDROGYNOUS, customInflections);
+      const rule = findRule(part, ANDROGYNOUS, cityRules);
       if (rule) {
         return applyRule(rule, part, PREPOSITIONAL);
       }
@@ -42,7 +42,7 @@ export function cityFrom(name: string, gender?: GenderStrT) {
     .map((part, i, parts) => {
       if (isFrozenPart(part, i, parts)) return part;
 
-      const rule = findRule(part, ANDROGYNOUS, customInflections);
+      const rule = findRule(part, ANDROGYNOUS, cityRules);
       if (rule) {
         return applyRule(rule, part, GENITIVE);
       }
