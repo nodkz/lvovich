@@ -1,6 +1,7 @@
 /* @flow */
 /* eslint-disable no-use-before-define, arrow-parens */
 
+import './polyfills';
 import genderRules from './rules/genderRules';
 
 export const MALE: 1 = 1;
