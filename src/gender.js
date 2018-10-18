@@ -1,7 +1,7 @@
 /* @flow */
 /* eslint-disable no-use-before-define, arrow-parens */
 
-import './polyfills';
+import { startsWith, endsWith } from './utils';
 import genderRules from './rules/genderRules';
 
 export const MALE: 1 = 1;
@@ -92,15 +92,15 @@ export function getGenderByRuleSet(name: string, ruleSet: GenderRuleSetT): ?Gend
   const nameLower = name.toLowerCase();
   if (ruleSet.exceptions) {
     const gender = getGenderByRule(ruleSet.exceptions, some => {
-      if (some.startsWith('-')) {
-        return nameLower.endsWith(some.substr(1));
+      if (startsWith(some, '-')) {
+        return endsWith(nameLower, some.substr(1));
       }
       return some === nameLower;
     });
     if (gender) return gender;
   }
   return ruleSet.suffixes
-    ? getGenderByRule(ruleSet.suffixes, some => nameLower.endsWith(some))
+    ? getGenderByRule(ruleSet.suffixes, some => endsWith(nameLower, some))
     : null;
 }
 

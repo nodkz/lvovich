@@ -1,6 +1,7 @@
 /* @flow */
 /* eslint-disable no-use-before-define, no-continue, arrow-parens */
 
+import { endsWith } from './utils';
 import { getGenderConst, ANDROGYNOUS } from './gender';
 import type { GenderStrT, GenderConstT } from './gender';
 
@@ -108,7 +109,7 @@ export function findRule(
   }
 
   return ruleSet.suffixes
-    ? findExactRule(ruleSet.suffixes, gender, some => strLower.endsWith(some), tagList)
+    ? findExactRule(ruleSet.suffixes, gender, some => endsWith(strLower, some), tagList)
     : null;
 }
 

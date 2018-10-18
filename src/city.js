@@ -1,6 +1,7 @@
 /* @flow */
 /* eslint-disable no-use-before-define, no-continue, arrow-parens */
 
+import { endsWith } from './utils';
 import { ANDROGYNOUS } from './gender';
 import {
   PREPOSITIONAL,
@@ -62,9 +63,9 @@ export function cityTo(name: string) {
 
       const partLower = part.toLowerCase();
 
-      if (partLower.endsWith('а')) {
+      if (endsWith(partLower, 'а')) {
         return applyMod(part, '-у');
-      } else if (partLower.endsWith('ая')) {
+      } else if (endsWith(partLower, 'ая')) {
         return applyMod(part, '--ую');
       }
 
