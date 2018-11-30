@@ -24,7 +24,7 @@ export type DeclentionStrT =
   | 'prepositional'
   | DeclentionT;
 
-export type DeclentionModsT = [string, string, string, string, string] | [];
+export type DeclentionModsT = [string, string, string, string, string];
 
 export type DeclensionRuleT = {
   gender: GenderStrT | GenderConstT | null;
