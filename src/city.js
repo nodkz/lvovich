@@ -67,6 +67,10 @@ export function cityTo(name: string) {
         return applyMod(part, '-у');
       } else if (endsWith(partLower, 'ая')) {
         return applyMod(part, '--ую');
+      } else if (endsWith(partLower, 'ия')) {
+        return applyMod(part, '--ию');
+      } else if (endsWith(partLower, 'я')) {
+        return applyMod(part, '-ю');
       }
 
       return part;
