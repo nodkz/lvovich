@@ -34,6 +34,7 @@ describe('lvovich/incline', () => {
   describe('inclineFirstname()', () => {
     it('should incline firstname', () => {
       expect(inclineFirstname('Павел', 'genitive')).toEqual('Павла');
+      expect(inclineFirstname('Санёк', 'genitive')).toEqual('Санька');
     });
 
     it('should accept gender for androgynous name', () => {

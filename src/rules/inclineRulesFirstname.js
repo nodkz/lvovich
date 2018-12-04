@@ -183,6 +183,11 @@ const name: DeclensionRuleSetT = {
     },
     {
       gender: 'male',
+      test: ['ёк'],
+      mods: ['--ька', '--ьку', '--ька', '--ьком', '--ьке'],
+    },
+    {
+      gender: 'male',
       test: [
         'б',
         'в',
