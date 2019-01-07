@@ -85,7 +85,7 @@ const cityInflections: DeclensionCityRuleSetT = {
       mods: ['--ка', '--ку', '', '--ком', '--ке'],
     },
     {
-      test: ['чик'], // Чик
+      test: ['чик', 'ич'], // Чик, Углич
       mods: ['а', 'у', '', 'ом', 'е'],
     },
     {
@@ -101,7 +101,7 @@ const cityInflections: DeclensionCityRuleSetT = {
       mods: ['-я', '-ю', '', 'м', ''],
     },
     {
-      test: ['ель'], // норильский никель
+      test: ['ель', 'пль'], // норильский никель, Гузерипль
       mods: ['-я', '-ю', '', '-ем', '-е'],
     },
     {
@@ -129,7 +129,7 @@ const cityInflections: DeclensionCityRuleSetT = {
       mods: ['а', 'у', '', 'ым', 'ом'],
     },
     {
-      test: ['ны'], // Челны
+      test: ['ны', 'вцы'], // Челны, Черновцы
       mods: ['-ов', '-ам', '', '-ами', '-ах'],
     },
     {
