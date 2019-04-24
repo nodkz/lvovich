@@ -78,6 +78,10 @@ const cityInflections: DeclensionCityRuleSetT = {
       test: ['холм'],
       mods: ['а', 'у', '', 'ом', 'е'],
     },
+    {
+      test: ['орел', 'орёл'], // Орел, Орёл
+      mods: ['--ла', '--лу', '--ла', '--лом', '--ле'],
+    },
   ],
   suffixes: [
     {
