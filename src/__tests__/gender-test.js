@@ -134,6 +134,10 @@ describe('lvovich/gender', () => {
         },
       };
 
+      it('should return null if name is empty', () => {
+        expect(getGenderByRuleSet('', ruleSet)).toEqual(null);
+      });
+
       it('should check exceptions firstly', () => {
         expect(getGenderByRuleSet('Дарвин', ruleSet)).toEqual(ANDROGYNOUS);
       });

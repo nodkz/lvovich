@@ -101,6 +101,10 @@ const cityInflections: DeclensionCityRuleSetT = {
       mods: ['-а', '-у', '', 'м', ''],
     },
     {
+      test: ['щи'], // Мытищи
+      mods: ['-', '-ам', '', '-ами', '-ах'],
+    },
+    {
       test: ['чье'], // Щучье
       mods: ['-я', '-ю', '', 'м', ''],
     },
