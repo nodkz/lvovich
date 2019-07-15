@@ -11,14 +11,14 @@ import {
   applyRule,
   applyMod,
 } from './inclineRules';
+import type { DeclentionT } from './inclineRules';
 import { inclineFirstname } from './incline';
 import { frozenWords, frozenParts, frozenPartsAfter, cityRules } from './rules/cityRules';
 import type { GenderStrT } from './gender';
 
 constantizeGenderInRules(cityRules);
 
-// предложный, в каком городе живете/находитесь?
-export function cityIn(name: string, gender?: GenderStrT) {
+function declineTo(name: string, wordCase: DeclentionT, gender?: GenderStrT) {
   if (isFrozen(name, frozenWords)) return name;
   return name
     .split(/(\s|-)/g)
@@ -27,33 +27,25 @@ export function cityIn(name: string, gender?: GenderStrT) {
 
       const rule = findRule(part, ANDROGYNOUS, cityRules);
       if (rule) {
-        return applyRule(rule, part, PREPOSITIONAL);
+        return applyRule(rule, part, wordCase);
       }
 
-      return inclineFirstname(part, PREPOSITIONAL, gender) || part;
+      return inclineFirstname(part, wordCase, gender) || part;
     })
     .join('');
+}
+
+// предложный, в каком городе живете/находитесь?
+export function cityIn(name: string, gender?: GenderStrT) {
+  return declineTo(name, PREPOSITIONAL, gender);
 }
 
 // родительный, из какого города приехали?
 export function cityFrom(name: string, gender?: GenderStrT) {
-  if (isFrozen(name, frozenWords)) return name;
-  return name
-    .split(/(\s|-)/g)
-    .map((part, i, parts) => {
-      if (isFrozenPart(part, i, parts)) return part;
-
-      const rule = findRule(part, ANDROGYNOUS, cityRules);
-      if (rule) {
-        return applyRule(rule, part, GENITIVE);
-      }
-
-      return inclineFirstname(part, GENITIVE, gender) || part;
-    })
-    .join('');
+  return declineTo(name, GENITIVE, gender);
 }
 
-// в какой город направляетесь?
+// винительный, в какой город направляетесь?
 export function cityTo(name: string) {
   if (!name) return name;
   return name
