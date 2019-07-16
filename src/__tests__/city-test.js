@@ -21,7 +21,7 @@ describe('lvovich/city', () => {
         const fromTest = `${arg}, ${res1}, ${res2}, ${res3}`;
         if (generated !== fromTest) {
           console.error(
-            'Format HINT: [city|именит, cityIn|предлож, cityFrom|родит, cityTo|винит]\n' +
+            'Format HINT: [city|именит, cityIn|предлож, cityFrom|родит, cityTo|направительный]\n' +
               `Generated:    ${arg}, в ${cityIn(arg)}, из ${cityFrom(arg)}, to ${cityTo(arg)}\n` +
               `In test file: ${arg}, в ${res1}, из ${res2}, to ${res3}`
           );
