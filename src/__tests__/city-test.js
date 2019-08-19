@@ -58,6 +58,7 @@ describe('lvovich/city', () => {
         Аркалык, Аркалыке, Аркалыка, Аркалык
         Арысь, Арысе, Арыся, Арысь
         Астана, Астане, Астаны, Астану
+        Нур-Султан, Нур-Султане, Нур-Султана, Нур-Султан
         Атбасар, Атбасаре, Атбасара, Атбасар
         Атырау, Атырау, Атырау, Атырау
         Аягоз, Аягозе, Аягоза, Аягоз
@@ -416,21 +417,6 @@ describe('lvovich/city', () => {
         Углич, в Угличе, из Углича, to Углич
         Черновцы, в Черновцах, из Черновцов, to Черновцы
       `);
-
-      // REMOVE this comments after 10.10.2018:
-      // conver old format from demo
-      // const a = ``;
-      // const lines = a
-      //   .split(/\n|\r/g)
-      //   .map(s => s.trim())
-      //   .map(s => s.replace(/#.*|\/\/.*/, ''))
-      //   .filter(s => !!s);
-      // const r = [];
-      // lines.forEach(line => {
-      //   const c = line.split(/\sв\s|\sto\s|\sиз\s/i);
-      //   r.push(`${c[0]}, в ${c[1]}, из ${c[3]}, to ${c[2]}`);
-      // });
-      // console.log(r.join('\n'));
     });
 
     it('correct declension for some place words', () => {
