@@ -47,6 +47,7 @@ export const frozenParts = [
   'экс', // экс-чемпиону
   'юго',
   'юрьев',
+  'нур',
 ];
 
 // do not decline words after this words
