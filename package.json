@@ -1,7 +1,7 @@
 {
   "name": "lvovich",
   "version": "0.0.0-semantic-release",
-  "description": "GraphQL schema builder from different data sources with middleware extensions.",
+  "description": "Library to decline people & city names in Russian, and to detect gender by name",
   "engines": {
     "node": ">= 6"
   },
