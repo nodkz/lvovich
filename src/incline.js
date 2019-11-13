@@ -64,7 +64,7 @@ export function incline(
   }
 
   if (person.middle) {
-    res.last = inclineMiddlename(person.middle.trim(), declension, res.gender);
+    res.middle = inclineMiddlename(person.middle.trim(), declension, res.gender);
   }
 
   return res;
