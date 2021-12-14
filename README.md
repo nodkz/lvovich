@@ -6,7 +6,8 @@
 [![npmtrends](https://img.shields.io/npm/dt/lvovich.svg)](http://www.npmtrends.com/lvovich)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 ![TypeScript compatible](https://img.shields.io/badge/typescript-compatible-brightgreen.svg)
-![FlowType compatible](https://img.shields.io/badge/flowtype-compatible-brightgreen.svg)
+
+0 сторонних зависимостей, может работать как на сервере, так и в браузере.
 
 Этот пакет для:
 
