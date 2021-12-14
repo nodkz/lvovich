@@ -1,0 +1,54 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Node.js CI
+
+on: [push, pull_request]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 14
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - name: Install node_modules
+        run: yarn
+      - name: Test – Jest
+        run: yarn coverage
+        env:
+          CI: true
+      - name: Test – Eslint
+        run: yarn eslint
+      - name: Test – TSCheck
+        run: yarn tscheck
+      - name: Publish Test Report
+        uses: mikepenz/action-junit-report@v2
+        with:
+          check_name: JUnit Annotations for Node ${{ matrix.node-version }}
+          report_paths: '**/coverage/junit/**/*.xml'
+      - name: Send codecov.io stats
+        run: bash <(curl -s https://codecov.io/bash) || echo ''
+
+  publish:
+    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/alpha' || github.ref == 'refs/heads/beta'
+    needs: [tests]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 14
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+      - name: Install node_modules
+        run: yarn install
+      - name: Build
+        run: yarn build
+      - name: Semantic Release (publish to npm)
+        run: yarn semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+

@@ -1,3 +1,11 @@
 {
-    "javascript.validate.enable": false
+    "javascript.validate.enable": false,
+    "cSpell.words": [
+        "constantize",
+        "Declention",
+        "firstname",
+        "lastname",
+        "lvovich",
+        "middlename"
+    ]
 }

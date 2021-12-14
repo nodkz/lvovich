@@ -1,5 +1,6 @@
-flow-typed
 lib
 mjs
 esm
 dist
+coverage
+*.js
