@@ -56,7 +56,7 @@ export const frozenPartsAfter = ['село', 'поселок', 'аул', 'гор
 const cityInflections: DeclensionCityRuleSetT = {
   exceptions: [
     {
-      test: ['сочи', 'тбилиси'],
+      test: ['сочи', 'тбилиси', 'хельсинки'],
       mods: ['', '', '', '', ''],
     },
     {
