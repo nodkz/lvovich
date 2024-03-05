@@ -85,6 +85,10 @@ const cityInflections: DeclensionCityRuleSetT = {
       test: ['крым'],
       mods: ['-ма', '-му', '-ма', '-ом', '-му'],
     },
+    {
+      test: ['бор'],
+      mods: ['а', 'у', '', 'ом', 'у'],
+    },
   ],
   suffixes: [
     {
