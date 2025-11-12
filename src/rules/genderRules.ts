@@ -2,8 +2,8 @@ import type { GenderRuleSetT } from '../gender';
 
 const middlename: GenderRuleSetT = {
   suffixes: {
-    female: ['на', 'кызы', 'гызы'],
-    male: ['ич', 'оглы', 'улы', 'уулу'],
+    female: ['на', 'кызы', 'кизи', 'гызы'],
+    male: ['ич', 'оглы', 'угли', 'улы', 'уулу'],
   },
 };
 
